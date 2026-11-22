@@ -1,0 +1,251 @@
+/* التصميم المشترك لكل صفحات الأسعار */
+
+:root {
+  --tile: #d6e8e3;          /* بلاط الحيطة */
+  --grout: rgba(255, 255, 255, 0.6);
+  --paper: #fdfdfb;         /* ورقة المنيو */
+  --ink: #15233f;           /* الكتابة */
+  --board: #15233f;         /* اليافطة */
+  --board-text: #ffffff;
+  --muted: #5f6f7a;
+  --leader: #b7c3c8;
+  --red: #c42a3c;           /* أحمر عمود الحلاق */
+  --pole-white: #ffffff;
+  --pole-blue: #24427a;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --tile: #0f1a2c;
+    --grout: rgba(255, 255, 255, 0.05);
+    --paper: #17243b;
+    --ink: #edf1f4;
+    --board: #0b1424;
+    --board-text: #ffffff;
+    --muted: #9fb0bb;
+    --leader: #3d4f66;
+    --red: #e4566a;
+    --pole-white: #e9edf1;
+    --pole-blue: #3b62a8;
+    color-scheme: dark;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Alexandria", "Geeza Pro", "Segoe UI", Tahoma, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--ink);
+  background-color: var(--tile);
+  background-image:
+    linear-gradient(var(--grout) 2px, transparent 2px),
+    linear-gradient(90deg, var(--grout) 2px, transparent 2px);
+  background-size: 46px 46px;
+  padding: 0 16px 40px;
+}
+
+.menu {
+  max-width: 30rem;
+  margin: 0 auto;
+}
+
+/* ===== اليافطة ===== */
+
+.sign {
+  background: var(--board);
+  color: var(--board-text);
+  text-align: center;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px -14px rgba(10, 20, 40, 0.55);
+}
+
+.pole {
+  --stripe: 12px;
+  height: 14px;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--red) 0 var(--stripe),
+    var(--pole-white) var(--stripe) calc(var(--stripe) * 2),
+    var(--pole-blue) calc(var(--stripe) * 2) calc(var(--stripe) * 3),
+    var(--pole-white) calc(var(--stripe) * 3) calc(var(--stripe) * 4)
+  );
+  background-size: calc(var(--stripe) * 4 * 1.41421356) 100%;
+  animation: pole 3.5s linear infinite;
+}
+
+@keyframes pole {
+  to {
+    background-position-x: calc(var(--stripe) * 4 * 1.41421356);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pole {
+    animation: none;
+  }
+}
+
+.sign h1 {
+  margin: 0;
+  padding: 26px 20px 24px;
+  font-family: "Aref Ruqaa", "Alexandria", serif;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.sign .name {
+  display: block;
+  font-size: clamp(3rem, 15vw, 4.4rem);
+}
+
+.sign .trade {
+  display: block;
+  margin-top: 4px;
+  font-size: clamp(1.5rem, 7vw, 2rem);
+  font-weight: 400;
+  opacity: 0.82;
+}
+
+/* ===== العرض ===== */
+
+.offer {
+  margin: 22px 0 0;
+  padding: 16px 18px;
+  background: var(--paper);
+  border: 2px solid var(--red);
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 2px 16px;
+}
+
+.offer .tag {
+  grid-column: 1 / -1;
+  justify-self: start;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--paper);
+  background: var(--red);
+  padding: 0 10px;
+  border-radius: 4px;
+  line-height: 1.8;
+}
+
+.offer .item {
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.offer .prices {
+  text-align: left;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.offer b {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--red);
+  font-variant-numeric: tabular-nums;
+}
+
+.offer s {
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+
+.offer s::before {
+  content: "بدل\00a0";
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* ===== قوايم الأسعار ===== */
+
+.list {
+  margin: 22px 0 0;
+  padding: 18px 18px 8px;
+  background: var(--paper);
+  border-radius: 8px;
+}
+
+.list + .list {
+  margin-top: 14px;
+}
+
+.list h2 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--red);
+}
+
+.list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 9px 0;
+}
+
+.list li + li {
+  border-top: 1px solid color-mix(in srgb, var(--leader) 35%, transparent);
+}
+
+.list li span {
+  order: 1;
+  min-width: 0;
+}
+
+.list li::after {
+  content: "";
+  order: 2;
+  flex: 1 0 1.5rem;
+  border-bottom: 2px dotted var(--leader);
+  transform: translateY(-0.3em);
+}
+
+.list li b {
+  order: 3;
+  font-weight: 700;
+  font-size: 1.125rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* علامة الجنيه بعد كل سعر */
+.list li b::after,
+.offer b::after {
+  content: " ج";
+  font-size: 0.7em;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.note {
+  margin: 18px 0 0;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
